@@ -30,6 +30,7 @@ Backend:
 
 ## Screenshots
 
+<img width="464" height="683" alt="register-page" src="https://github.com/user-attachments/assets/1a120a18-fb94-4962-941d-c4b8a31bfa0d" />
 
 
 ## Installation
