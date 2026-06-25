@@ -6,17 +6,21 @@ const authRoutes = require("./src/routes/auth.routes");
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: true,
     credentials: true,
   })
 );
+
 app.use("/api/auth", authRoutes);
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
-});
+
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
     message: "AuthFlow Backend Running 🚀",
   });
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
