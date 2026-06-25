@@ -14,3 +14,9 @@ app.use("/api/auth", authRoutes);
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "AuthFlow Backend Running 🚀",
+  });
+});
