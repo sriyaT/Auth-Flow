@@ -6,7 +6,10 @@ const authRoutes = require("./src/routes/auth.routes");
 app.use(express.json());
 app.use(
   cors({
-    origin: true,
+    origin: [
+      "http://localhost:5173",
+      "https://auth-flow-7ud91fb8h-sriyats-projects.vercel.app/",
+    ],
     credentials: true,
   })
 );
