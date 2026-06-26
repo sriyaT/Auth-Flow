@@ -4,12 +4,22 @@ const app = express();
 
 const authRoutes = require("./src/routes/auth.routes");
 app.use(express.json());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://auth-flow-dgtvqvkz8-sriyats-projects.vercel.app",
+];
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://auth-flow-7ud91fb8h-sriyats-projects.vercel.app/",
-    ],
+    origin: function (origin, callback) {
+      // Allow requests without an origin (Postman, mobile apps, etc.)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   })
 );
@@ -24,6 +34,7 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
