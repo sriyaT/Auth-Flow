@@ -126,7 +126,7 @@ const forgotPassword = async (userEmail) => {
   const resetTokenExpiry = new Date(Date.now() + 30 * 60 * 1000);
   const reset_token = crypto.randomUUID();
   await userRepository.resetPassword(reset_token, resetTokenExpiry, userEmail);
-  const resetUrl = `http://localhost:5173/auth/reset-password/${reset_token}`;
+  const resetUrl = `${process.env.FRONTEND_URL}/auth/reset-password/${reset_token}`;
   await emailService.sendEmail({
     from: process.env.EMAIL_USER,
     to: userEmail,
