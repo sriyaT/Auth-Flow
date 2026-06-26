@@ -10,7 +10,7 @@ app.use((req, res, next) => {
 });
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://auth-flow-l9d8zg8h9-sriyats-projects.vercel.app",
+  "https://auth-flow-five-iota.vercel.app",
 ];
 
 app.use(
