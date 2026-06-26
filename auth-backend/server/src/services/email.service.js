@@ -11,6 +11,9 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendEmail = async (mailOptions) => {
+  await transporter.verify();
+  console.log("SMTP connected successfully");
+
   return await transporter.sendMail(mailOptions);
 };
 
