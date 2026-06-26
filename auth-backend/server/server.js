@@ -4,14 +4,18 @@ const app = express();
 
 const authRoutes = require("./src/routes/auth.routes");
 app.use(express.json());
+app.use((req, res, next) => {
+  console.log("Origin:", req.headers.origin);
+  next();
+});
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://auth-flow-dgtvqvkz8-sriyats-projects.vercel.app",
+  "https://auth-flow-l9d8zg8h9-sriyats-projects.vercel.app",
 ];
+
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow requests without an origin (Postman, mobile apps, etc.)
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.includes(origin)) {
