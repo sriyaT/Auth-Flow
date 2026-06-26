@@ -11,10 +11,17 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendEmail = async (mailOptions) => {
-  await transporter.verify();
-  console.log("SMTP connected successfully");
+  try {
+    await transporter.verify();
+    console.log("SMTP Connected");
 
-  return await transporter.sendMail(mailOptions);
+    const res = await transporter.sendMail(mailOptions);
+    return res;
+  } catch (err) {
+    console.error("SMTP ERROR");
+    console.error(err);
+    throw err;
+  }
 };
 
 module.exports = {

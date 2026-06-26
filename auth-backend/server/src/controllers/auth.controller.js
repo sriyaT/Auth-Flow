@@ -95,6 +95,9 @@ const forgotPassword = async (req, res) => {
     const result = await authService.forgotPassword(userEmail);
     return res.status(200).json(result);
   } catch (err) {
+    console.error("Forgot Password Error:");
+    console.error(err);
+
     return res.status(400).json({
       success: false,
       message: err.message,
