@@ -1,4 +1,4 @@
-import AppRoutes from "./routes/AppROutes";
+import AppRoutes from "./routes/AppRoutes";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import "./App.css";
