@@ -201,7 +201,7 @@ const Register = () => {
           <button
             onClick={registerHandler}
             disabled={loading}
-            className="w-full rounded-xl bg-pink-600 py-3 text-white font-semibold transition hover:bg-pink-700 disabled:bg-gray-400"
+            className="w-full rounded-xl bg-pink-600 py-3 text-gray-700 font-semibold transition hover:bg-pink-700 disabled:bg-gray-400"
           >
             {loading ? "Creating Account..." : "Register"}
           </button>

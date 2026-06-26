@@ -154,7 +154,7 @@ const Login = () => {
           <button
             disabled={loading}
             onClick={loginHandler}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition disabled:opacity-50"
+            className="w-full bg-blue-600 text-gray-700 py-3 rounded-lg font-medium hover:bg-blue-700 transition disabled:opacity-50"
           >
             {loading ? "Signing In..." : "Login"}
           </button>

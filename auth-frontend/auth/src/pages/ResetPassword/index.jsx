@@ -92,7 +92,7 @@ const ResetPassword = () => {
           <button
             onClick={resetHandler}
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 transition"
+            className="w-full bg-blue-600 text-gray-700 py-3 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 transition"
           >
             {loading ? "Updating..." : "Reset Password"}
           </button>
