@@ -1,3 +1,10 @@
+require("dotenv").config();
+
+onsole.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
+console.log("JWT_REFRESH_SECRET exists:", !!process.env.JWT_REFRESH_SECRET);
+console.log("RESEND_API_KEY exists:", !!process.env.RESEND_API_KEY);
+console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
+
 const express = require("express");
 const cors = require("cors");
 const app = express();
