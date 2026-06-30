@@ -128,7 +128,7 @@ const forgotPassword = async (userEmail) => {
   await userRepository.resetPassword(reset_token, resetTokenExpiry, userEmail);
   const resetUrl = `${process.env.FRONTEND_URL}/auth/reset-password/${reset_token}`;
   await emailService.sendEmail({
-    from: process.env.EMAIL_USER,
+    from: "onboarding@resend.dev",
     to: userEmail,
     subject: "Reset Your Password",
     text: `Click here to reset your password: ${resetUrl}`,
