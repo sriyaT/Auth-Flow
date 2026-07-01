@@ -6,7 +6,7 @@ The application demonstrates secure authentication practices including JWT-based
 
 ## 🚀 Live Demo
 
-- **Frontend:** https://auth-flow-five-iota.vercel.app/
+- **Frontend:** https://auth-flow-five-iota.vercel.app/auth/
 - **Backend API:** https://auth-flow-backend-1v2h.onrender.com/
 
 ---
