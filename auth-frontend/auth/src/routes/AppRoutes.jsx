@@ -11,7 +11,7 @@ import ResetPassword from "../pages/ResetPassword";
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/auth/" element={<Home />} />
       <Route path="/auth/login" element={<Login />} />
       <Route path="/auth/register" element={<Register />} />
       <Route path="/auth/forgot-password" element={<ForgotPassword />} />
