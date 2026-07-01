@@ -224,4 +224,72 @@ password_hash VARCHAR  NOT NULL,
 created_at TIMESTAMP DEFAULT now() 
 );
 
+Let's focus on Features:
+
+1. Register:
+
+   Now we will slowly build the service layer for register flow, where we will exactly look for if the email already exists or not and then we will hash the password, create the user and return the user.
+
+register(username, email, password)
+
+1. Check if email exists
+   repository.findByEmail(email)
+
+2. If exists
+   throw Error("Email already exists")
+
+3. Hash password
+   bcrypt.hash(password, saltRounds)
+
+4. Create user
+   repository.createUser(
+      username,
+      email,
+      passwordHash
+   )
+
+5. Return created user
+
+
+Controller = thin layer
+It should ONLY:
+get req.body
+call service
+send response
+NO business logic here
+
+Controller
+receives request
+sends response
+🟢 Service
+checks existing user
+hashes password (bcrypt)
+calls repository
+🟢 Repository
+runs SQL safely
+returns only needed fields
+🟢 PostgreSQL
+stores user
+auto-generates:
+id
+Created_at
+
+🎉 Final result
+
+{
+ "success": true,
+ "user": {
+   "id": 1,
+   "username": "sriya",
+   "email": "sriya@gmail.com",
+   "created_at": "2026-06-02T19:15:10.790Z"
+ }
+}
+
+✅ No password exposed
+✅ Clean architecture
+✅ Proper service-repository separation
+✅ Secure hashing in place
+
+
 
