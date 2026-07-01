@@ -1,114 +1,35 @@
 # Auth-Flow
 
 A production-ready full-stack authentication system built with **React, Express.js, PostgreSQL, JWT, Redux Toolkit, Tailwind CSS, and Resend**.
+# Auth-Flow
+Full-stack authentication system built with React, Node.js, PostgreSQL, JWT, bcrypt, and Nodemailer featuring login, registration, protected routes, and password reset via email.
 
-The application demonstrates secure authentication practices including JWT-based login, refresh tokens, protected routes, and password reset via email.
+## Features
 
-## 🚀 Live Demo
+- User Registration
+- User Login
+- JWT Authentication
+- Protected Routes
+- Forgot Password
+- Password Reset via Email
+- Password Hashing with bcrypt
+- PostgreSQL Database Integration
 
-- **Frontend:** https://auth-flow-five-iota.vercel.app/auth/
-- **Backend API:** https://auth-flow-backend-1v2h.onrender.com/
+## Tech Stack
 
----
-
-## ✨ Features
-
-- ✅ User Registration
-- ✅ User Login
-- ✅ JWT Authentication
-- ✅ Refresh Token Authentication
-- ✅ Protected Routes
-- ✅ User Profile
-- ✅ Forgot Password
-- ✅ Password Reset via Email
-- ✅ Password Hashing with bcrypt
-- ✅ PostgreSQL Integration
-- ✅ Responsive UI using Tailwind CSS
-
----
-
-## 🛠️ Tech Stack
-
-### Frontend
+Frontend:
 - React
-- Vite
-- React Router DOM
+- React Router
 - Redux Toolkit
-- Axios
 - Tailwind CSS
 
-### Backend
+Backend:
 - Node.js
 - Express.js
 - PostgreSQL
-- JWT (jsonwebtoken)
+- JWT
 - bcrypt
-- Resend Email API
-
-### Deployment
-- Frontend → Vercel
-- Backend → Render
-- Database → PostgreSQL
-
----
-
-## 🏗️ Project Architecture
-
-```
-React App
-      │
-      ▼
- Express.js API
-      │
-      ▼
-Service Layer
-      │
-      ▼
-Repository Layer
-      │
-      ▼
- PostgreSQL
-      │
-      └──────────────► Resend
-                             │
-                             ▼
-                      Password Reset Email
-
-## 📂 Folder Structure
-
-```
-auth-project
-│
-├── auth-backend
-│   ├── src
-│   │   ├── controllers
-│   │   ├── services
-│   │   ├── repositories
-│   │   ├── middleware
-│   │   ├── routes
-│   │   └── db
-│   └── server.js
-│
-└── auth-frontend
-    ├── src
-    │   ├── api
-    │   ├── components
-    │   ├── pages
-    │   ├── redux
-    │   └── routes
-    └── vite.config.js
-
-## 🔐 Authentication Flow
-
-1. User registers with email and password.
-2. Password is securely hashed using **bcrypt**.
-3. User logs in and receives:
-   - JWT Access Token
-   - Refresh Token
-4. Protected routes validate the JWT.
-5. Forgot Password generates a secure reset token and sends a reset link using **Resend**.
-6. User resets the password through the secure reset page.
-
+- Nodemailer
 
 ## Screenshots
 
@@ -140,73 +61,514 @@ auth-project
 
 <img width="677" height="592" alt="home--" src="https://github.com/user-attachments/assets/f9e14e54-dab4-4de0-a8d3-e76f30ea40aa" />
 
-## ⚙️ Installation
+## Installation & Setup
 
-### Backend
+Setting up Backend:
 
-```bash
+# creake a project folder, same place we will have auth-backend as backend folder and auth-frontend as frontend folder.
+mkdir auth-project
+cd auth-project
+
+mkdir auth-backend
+mkdir auth-frontend
+
 cd auth-backend
-npm install
-npm run dev
-```
 
-### Frontend
+mkdir server
+cd server
 
-```bash
-cd auth-frontend
-npm install
-npm run dev
+npm init -y
+
+Install dependencies:
+npm install express pg bcrypt dotenv cors
+npm install -D nodemon
+
+<img width="362" height="321" alt="ins1" src="https://github.com/user-attachments/assets/dbd42c34-0112-40fa-8e83-153503419157" />
+
+<img width="382" height="359" alt="backendfolderstruct" src="https://github.com/user-attachments/assets/105a4250-678b-42f0-b82b-ce79f1d67624" />
+
+# Create Postgressql DB:
+
+Install PostgreSQL locally.
+Create database:
+CREATE DATABASE auth_project;
+Create users table:
 
 # Configure Environment Variables
 
 .env
-PORT=
-DB_HOST=
-DB_PORT=
-DB_USER=
-DB_PASSWORD=
-DB_NAME=
+PORT=5000
 
-JWT_SECRET=
-JWT_REFRESH_SECRET=
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_NAME=auth_project
 
-RESEND_API_KEY=
+** Very Important
+Never commit this file.
+Add .gitignore
+node_modules
+.env
 
-FRONTEND_URL=
-```
+# Create DB Connection
 
-## 📚 Learn More
+src/db/db.js
+const { Pool } = require("pg");
 
-I documented the complete development journey—including backend setup, frontend architecture, authentication flow, deployment, challenges, and production debugging—in a detailed technical blog.
+const pool = new Pool({
+ host: process.env.DB_HOST,
+ port: process.env.DB_PORT,
+ user: process.env.DB_USER,
+ password: process.env.DB_PASSWORD,
+ database: process.env.DB_NAME,
+});
 
-📝 **Read the full blog:** *(Coming Soon)*
+module.exports = pool;
 
----
+# Create Express App
 
-## 🚀 Future Improvements
+src/app.js
+const express = require("express");
+const cors = require("cors");
 
-- Email Verification
-- Change Password
-- OAuth (Google / GitHub)
-- Role-Based Authorization
-- Rate Limiting
-- Docker Support
-- CI/CD Pipeline
-- Unit & Integration Testing
+const app = express();
 
----
+app.use(express.json());
 
-## 🌱 Key Learnings
+app.use(
+ cors({
+   origin: "http://localhost:5173",
+   credentials: true,
+ })
+);
 
-- Implemented a layered backend architecture (Controller → Service → Repository).
-- Built secure JWT authentication with refresh tokens.
-- Integrated password reset via Resend.
-- Deployed a full-stack application using Vercel and Render.
-- Solved real-world production issues including CORS, routing, environment variables, and email delivery.
+module.exports = app;
+
+# Create Server Entry
+
+server.js
+require("dotenv").config();
+
+const app = require("./src/app");
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+ console.log(`Server running on port ${PORT}`);
+});
+
+# Add Scripts
+
+package.json
+
+{
+ "scripts": {
+   "start": "node server.js",
+   "dev": "nodemon server.js"
+ }
+}
+
+Run:
+npm run dev
+
+Expected:
+Server running on port 5000
+
+# Create Health Check Route
+src/routes/health.routes.js
+const router = require("express").Router();
+
+router.get("/", (req, res) => {
+ res.json({
+   status: "ok",
+ });
+});
+
+module.exports = router;
+
+Register in app.js:
+const healthRoutes = require("./routes/health.routes");
+
+app.use("/health", healthRoutes);
+
+Test:
+http://localhost:5000/health
+
+Response:
+{
+ "status": "ok"
+}
+
+Before touching authentication:
+ ✅ Express architecture
+ ✅ PostgreSQL connection
+ ✅ Environment variables
+ ✅ API structure
+ ✅ CORS basics
+ ✅ Project organization
+
+
+1st let's make the users schema:
+
+id   integer data type required auto generated and primary key,
+username varchar(limit) required,
+email varchar(limit) required unique,
+hash_password varchar(limit) required,
+Created_at timestamp default now()
+
+Now let’s write the sql query to create users table with above data schema.
+
+CREATE TABLE users (
+id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+username VARCHAR(200) NOT NULL,
+email VARCHAR(250)  NOT NULL UNIQUE,
+password_hash VARCHAR  NOT NULL,
+created_at TIMESTAMP DEFAULT now() 
+);
+
+🏗️ Architecture Explanation:
+
+Why use Controller → Service → Repository?
+
+Controller
+Responsible for:
+Request and Response handling
+
+Examples:
+Read req.body
+Send JSON response
+
+Service
+Responsible for:
+Business logic
+
+Examples:
+Check existing email
+Hash password
+Compare passwords
+Generate JWT
+
+Repository
+Responsible for:
+Database access only
+
+Examples:
+SELECT queries
+INSERT queries
+UPDATE queries
+
+🎯 NOTE- The controller receives the request and delegates work to the service. The service contains all business logic such as validation, password hashing, and authentication. The repository is responsible only for interacting with PostgreSQL. This separation makes the code easier to maintain, test, and scale.
+
+# Let's focus on Features:
+
+# 1. Register:
+
+   Now we will slowly build the service layer for register flow, where we will exactly look for if the email already exists or not and then we will hash the password, create the user and return the user.
+
+register(username, email, password)
+
+1. Check if email exists
+   repository.findByEmail(email)
+
+2. If exists
+   throw Error("Email already exists")
+
+3. Hash password
+   bcrypt.hash(password, saltRounds)
+
+4. Create user
+   repository.createUser(
+      username,
+      email,
+      passwordHash
+   )
+
+5. Return created user
+
+
+Controller = thin layer
+It should ONLY:
+get req.body
+call service
+send response
+NO business logic here
+
+Controller
+receives request
+sends response
+🟢 Service
+checks existing user
+hashes password (bcrypt)
+calls repository
+🟢 Repository
+runs SQL safely
+returns only needed fields
+🟢 PostgreSQL
+stores user
+auto-generates:
+id
+Created_at
+
+🎉 Final result
+
+{
+ "success": true,
+ "user": {
+   "id": 1,
+   "username": "sriya",
+   "email": "sriya@gmail.com",
+   "created_at": "2026-06-02T19:15:10.790Z"
+ }
+}
+
+✅ No password exposed
+✅ Clean architecture
+✅ Proper service-repository separation
+✅ Secure hashing in place
+
+# 📝 User Registration Flow
+
+Step 1: Client sends a request
+The client sends a POST request to:
+POST /api/auth/register
+with:
+{
+ "username": "sriya",
+ "email": "sriya@gmail.com",
+ "password": "Password123"
+}
+
+Step 2: Controller receives the request
+The controller:
+Extracts username, email, and password from req.body
+Calls the service layer
+Controller → authService.register(...)
+The controller does not contain business logic.
+
+Step 3: Service layer performs business logic
+The service:
+
+A. Checks if the email already exists
+Calls:
+userRepository.findByEmail(email)
+If a user is found:
+Throw "Email Already Exists"
+and stop the flow.
+
+B. Hashes the password
+If the email doesn't exist:
+bcrypt.hash(password, 10)
+The plain password is never stored in the database.
+
+C. Creates the user
+
+Calls:
+userRepository.createUser(...)
+passing:
+username
+email
+hashed password
+
+Step 4: Repository interacts with PostgreSQL
+
+The repository:
+Executes the SQL INSERT query
+Stores the user
+Returns the newly created user
+For example:
+{
+ "id": 1,
+ "username": "sriya",
+ "email": "sriya@gmail.com",
+ "created_at": "..."
+}
+
+Step 5: Response is sent back
+The controller sends:
+201 Created
+{
+ "success": true,
+ "user": {
+   "id": 1,
+   "username": "sriya",
+   "email": "sriya@gmail.com"
+ }
+}
+
+Controller code for Register Flow:
+
+<img width="670" height="409" alt="register-backendCode" src="https://github.com/user-attachments/assets/665f8b95-d77f-463d-a3b7-9b0bcd12be6f" />
+
+Service Logic For Register Flow:
+
+<img width="730" height="338" alt="Service logic for register backend code" src="https://github.com/user-attachments/assets/deda76b5-d0c8-4928-aba2-d0e25705ba0d" />
+
+Repository code for Register FLow: 
+
+<img width="726" height="500" alt="repRegBCode" src="https://github.com/user-attachments/assets/83cf9166-8e18-41e5-9aca-532f52c31118" />
+
+# Frontend Setup:
+
+We already have auth-frontend folder.
+cd auth-frontend
+
+# Create frontend app using REACT + VITE
+
+Then install:
+react-router-dom
+redux-toolkit
+react-redux
+axios
+
+<img width="322" height="471" alt="f1" src="https://github.com/user-attachments/assets/b3f0d5f5-3d76-461d-8c36-ef54fe5da105" />
+
+<img width="240" height="363" alt="f2" src="https://github.com/user-attachments/assets/92d01c16-2252-4b41-ae4f-480412f85b08" />
+
+<img width="238" height="206" alt="f3" src="https://github.com/user-attachments/assets/4ce24ad9-603e-47ca-86fc-a062e75f30b8" />
+
+<img width="310" height="377" alt="f4" src="https://github.com/user-attachments/assets/527e4a2c-943a-4489-95da-62cf4c533987" />
+
+Implement:
+  main.jsx
+  ↓
+  BrowserRouter
+  
+  App.jsx
+  ↓
+  AppRoutes
+  
+  AppRoutes.jsx
+  ↓
+  4 routes
+  
+  4 placeholder pages
+
+ # Redux Flow Once router flow done:
+
+  store/
+    ↓
+  Redux store configuration
+  
+  slices/
+    ↓
+  Feature state management
+
+  Create:
+src/redux/store
+src/redux/slices
+
+Now create our first Redux slice file.
+
+Create: src/redux/slices/authSlice.js
+
+const initialState = {
+  user: {},
+  accessToken: "",
+  refreshToken: "",
+  isAuthenticated: false,
+  loading: false,
+  error: null,
+};
+
+🎯 Next Step: Redux Store
+Create:
+src/redux/store/store.js
+Before writing code, think:
+Store
+↓
+Collects all reducers
+↓
+Creates one Redux store
+Currently how many slices do you have?
+authSlice
+Only one.
+
+
+So the store will initially contain:
+auth
+↓
+authReducer
+
+
+Architecture so far:
+src/
+│
+├── redux/
+│   ├── store/
+│   │   └── store.js
+│   │
+│   └── slices/
+│       └── authSlice.js
+│
+├── routes/
+├── pages/
+
+🎯 Next Step: Connect Redux to React
+Before Redux can be used inside components:
+Redux Store
+↓
+Provider
+↓
+React App
+must be connected.
+main.jsx
+Responsible for:
+Application bootstrapping
+Examples:
+ReactDOM.createRoot
+BrowserRouter
+Redux Provider
+Theme Provider
+
+	App.jsx
+Responsible for:
+Application UI
+Examples:
+AppRoutes
+Layouts
+Global UI components
+
+Production Structure
+main.jsx
+│
+├── BrowserRouter
+├── Redux Provider
+│
+└── App
+     │
+     └── AppRoutes
+This keeps all app-wide providers in one place.
+
+The code for Register page flow looks something like this:
+
+<img width="664" height="740" alt="fr1" src="https://github.com/user-attachments/assets/a3b3e89b-80d8-4499-ab4b-ae38da0b3998" />
+
+<img width="438" height="723" alt="frp2" src="https://github.com/user-attachments/assets/bf880a0f-5483-4f9d-94ca-640eccbc9f34" />
+
+<img width="1044" height="752" alt="frp3" src="https://github.com/user-attachments/assets/dc611369-9bcc-431f-981d-641836a676ad" />
+
+<img width="1109" height="704" alt="frp5" src="https://github.com/user-attachments/assets/9cda8bf4-af02-4b72-9f8e-2e9ba78a7808" />
+
+<img width="908" height="629" alt="frp6" src="https://github.com/user-attachments/assets/b37b2822-1eff-44a2-8c3d-8f8859757b4c" />
 
 ## 👩‍💻 Author
 
 **Sriya T**
 
 If you found this project helpful, feel free to ⭐ the repository.
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
 
