@@ -58,11 +58,11 @@ Backend:
 
 <img width="677" height="592" alt="home--" src="https://github.com/user-attachments/assets/f9e14e54-dab4-4de0-a8d3-e76f30ea40aa" />
 
-## Installation
+## Installation & Setup
 
 Setting up Backend:
 
-#creake a project folder, same place we will have auth-backend as backend folder and auth-frontend as frontend folder.
+# creake a project folder, same place we will have auth-backend as backend folder and auth-frontend as frontend folder.
 mkdir auth-project
 cd auth-project
 
@@ -82,6 +82,146 @@ npm install -D nodemon
 
 <img width="362" height="321" alt="ins1" src="https://github.com/user-attachments/assets/dbd42c34-0112-40fa-8e83-153503419157" />
 
+<img width="382" height="359" alt="backendfolderstruct" src="https://github.com/user-attachments/assets/105a4250-678b-42f0-b82b-ce79f1d67624" />
 
+# Create Postgressql DB:
+
+Install PostgreSQL locally.
+Create database:
+CREATE DATABASE auth_project;
+Create users table:
+
+# Configure Environment Variables
+
+.env
+PORT=5000
+
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_NAME=auth_project
+
+** Very Important
+Never commit this file.
+Add .gitignore
+node_modules
+.env
+
+# Create DB Connection
+
+src/db/db.js
+const { Pool } = require("pg");
+
+const pool = new Pool({
+ host: process.env.DB_HOST,
+ port: process.env.DB_PORT,
+ user: process.env.DB_USER,
+ password: process.env.DB_PASSWORD,
+ database: process.env.DB_NAME,
+});
+
+module.exports = pool;
+
+# Create Express App
+
+src/app.js
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+
+app.use(express.json());
+
+app.use(
+ cors({
+   origin: "http://localhost:5173",
+   credentials: true,
+ })
+);
+
+module.exports = app;
+
+# Create Server Entry
+
+server.js
+require("dotenv").config();
+
+const app = require("./src/app");
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+ console.log(`Server running on port ${PORT}`);
+});
+
+# Add Scripts
+
+package.json
+
+{
+ "scripts": {
+   "start": "node server.js",
+   "dev": "nodemon server.js"
+ }
+}
+
+Run:
+npm run dev
+
+Expected:
+Server running on port 5000
+
+# Create Health Check Route
+src/routes/health.routes.js
+const router = require("express").Router();
+
+router.get("/", (req, res) => {
+ res.json({
+   status: "ok",
+ });
+});
+
+module.exports = router;
+
+Register in app.js:
+const healthRoutes = require("./routes/health.routes");
+
+app.use("/health", healthRoutes);
+
+Test:
+http://localhost:5000/health
+
+Response:
+{
+ "status": "ok"
+}
+
+Before touching authentication:
+ ✅ Express architecture
+ ✅ PostgreSQL connection
+ ✅ Environment variables
+ ✅ API structure
+ ✅ CORS basics
+ ✅ Project organization
+
+
+1st let's make the users schema:
+
+id   integer data type required auto generated and primary key,
+username varchar(limit) required,
+email varchar(limit) required unique,
+hash_password varchar(limit) required,
+Created_at timestamp default now()
+
+Now let’s write the sql query to create users table with above data schema.
+
+CREATE TABLE users (
+id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+username VARCHAR(200) NOT NULL,
+email VARCHAR(250)  NOT NULL UNIQUE,
+password_hash VARCHAR  NOT NULL,
+created_at TIMESTAMP DEFAULT now() 
+);
 
 
