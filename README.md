@@ -426,6 +426,137 @@ axios
 
 <img width="310" height="377" alt="f4" src="https://github.com/user-attachments/assets/527e4a2c-943a-4489-95da-62cf4c533987" />
 
+Implement:
+  main.jsx
+  ↓
+  BrowserRouter
+  
+  App.jsx
+  ↓
+  AppRoutes
+  
+  AppRoutes.jsx
+  ↓
+  4 routes
+  
+  4 placeholder pages
+
+ # Redux Flow Once router flow done:
+
+  store/
+    ↓
+  Redux store configuration
+  
+  slices/
+    ↓
+  Feature state management
+
+  Create:
+src/redux/store
+src/redux/slices
+
+Now create our first Redux slice file.
+
+Create: src/redux/slices/authSlice.js
+
+const initialState = {
+  user: {},
+  accessToken: "",
+  refreshToken: "",
+  isAuthenticated: false,
+  loading: false,
+  error: null,
+};
+
+🎯 Next Step: Redux Store
+Create:
+src/redux/store/store.js
+Before writing code, think:
+Store
+↓
+Collects all reducers
+↓
+Creates one Redux store
+Currently how many slices do you have?
+authSlice
+Only one.
+
+
+So the store will initially contain:
+auth
+↓
+authReducer
+
+
+Architecture so far:
+src/
+│
+├── redux/
+│   ├── store/
+│   │   └── store.js
+│   │
+│   └── slices/
+│       └── authSlice.js
+│
+├── routes/
+├── pages/
+
+🎯 Next Step: Connect Redux to React
+Before Redux can be used inside components:
+Redux Store
+↓
+Provider
+↓
+React App
+must be connected.
+main.jsx
+Responsible for:
+Application bootstrapping
+Examples:
+ReactDOM.createRoot
+BrowserRouter
+Redux Provider
+Theme Provider
+
+	App.jsx
+Responsible for:
+Application UI
+Examples:
+AppRoutes
+Layouts
+Global UI components
+
+Production Structure
+main.jsx
+│
+├── BrowserRouter
+├── Redux Provider
+│
+└── App
+     │
+     └── AppRoutes
+This keeps all app-wide providers in one place.
+
+The code for Register page flow looks something like this:
+
+<img width="664" height="740" alt="fr1" src="https://github.com/user-attachments/assets/a3b3e89b-80d8-4499-ab4b-ae38da0b3998" />
+
+<img width="438" height="723" alt="frp2" src="https://github.com/user-attachments/assets/bf880a0f-5483-4f9d-94ca-640eccbc9f34" />
+
+<img width="1044" height="752" alt="frp3" src="https://github.com/user-attachments/assets/dc611369-9bcc-431f-981d-641836a676ad" />
+
+<img width="1109" height="704" alt="frp5" src="https://github.com/user-attachments/assets/9cda8bf4-af02-4b72-9f8e-2e9ba78a7808" />
+
+<img width="908" height="629" alt="frp6" src="https://github.com/user-attachments/assets/b37b2822-1eff-44a2-8c3d-8f8859757b4c" />
+
+
+
+
+
+
+
+
+
 
 
 
