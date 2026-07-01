@@ -224,9 +224,42 @@ password_hash VARCHAR  NOT NULL,
 created_at TIMESTAMP DEFAULT now() 
 );
 
-Let's focus on Features:
+🏗️ Architecture Explanation:
 
-1. Register:
+Why use Controller → Service → Repository?
+
+Controller
+Responsible for:
+Request and Response handling
+
+Examples:
+Read req.body
+Send JSON response
+
+Service
+Responsible for:
+Business logic
+
+Examples:
+Check existing email
+Hash password
+Compare passwords
+Generate JWT
+
+Repository
+Responsible for:
+Database access only
+
+Examples:
+SELECT queries
+INSERT queries
+UPDATE queries
+
+🎯 NOTE- The controller receives the request and delegates work to the service. The service contains all business logic such as validation, password hashing, and authentication. The repository is responsible only for interacting with PostgreSQL. This separation makes the code easier to maintain, test, and scale.
+
+# Let's focus on Features:
+
+# 1. Register:
 
    Now we will slowly build the service layer for register flow, where we will exactly look for if the email already exists or not and then we will hash the password, create the user and return the user.
 
@@ -291,6 +324,87 @@ Created_at
 ✅ Proper service-repository separation
 ✅ Secure hashing in place
 
-2. Login :
+# 📝 User Registration Flow
+
+Step 1: Client sends a request
+The client sends a POST request to:
+POST /api/auth/register
+with:
+{
+ "username": "sriya",
+ "email": "sriya@gmail.com",
+ "password": "Password123"
+}
+
+Step 2: Controller receives the request
+The controller:
+Extracts username, email, and password from req.body
+Calls the service layer
+Controller → authService.register(...)
+The controller does not contain business logic.
+
+Step 3: Service layer performs business logic
+The service:
+
+A. Checks if the email already exists
+Calls:
+userRepository.findByEmail(email)
+If a user is found:
+Throw "Email Already Exists"
+and stop the flow.
+
+B. Hashes the password
+If the email doesn't exist:
+bcrypt.hash(password, 10)
+The plain password is never stored in the database.
+
+C. Creates the user
+
+Calls:
+userRepository.createUser(...)
+passing:
+username
+email
+hashed password
+
+Step 4: Repository interacts with PostgreSQL
+
+The repository:
+Executes the SQL INSERT query
+Stores the user
+Returns the newly created user
+For example:
+{
+ "id": 1,
+ "username": "sriya",
+ "email": "sriya@gmail.com",
+ "created_at": "..."
+}
+
+Step 5: Response is sent back
+The controller sends:
+201 Created
+{
+ "success": true,
+ "user": {
+   "id": 1,
+   "username": "sriya",
+   "email": "sriya@gmail.com"
+ }
+}
+
+Controller code for Register Flow:
+
+<img width="670" height="409" alt="register-backendCode" src="https://github.com/user-attachments/assets/665f8b95-d77f-463d-a3b7-9b0bcd12be6f" />
+
+Service Logic For Register Flow:
+
+<img width="730" height="338" alt="Service logic for register backend code" src="https://github.com/user-attachments/assets/deda76b5-d0c8-4928-aba2-d0e25705ba0d" />
+
+Repository code for Register FLow: 
+
+<img width="726" height="500" alt="repRegBCode" src="https://github.com/user-attachments/assets/83cf9166-8e18-41e5-9aca-532f52c31118" />
+
+
    
 
