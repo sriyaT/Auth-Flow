@@ -196,6 +196,14 @@ I documented the complete development journey—including backend setup, fronten
 
 ---
 
+## 🌱 Key Learnings
+
+- Implemented a layered backend architecture (Controller → Service → Repository).
+- Built secure JWT authentication with refresh tokens.
+- Integrated password reset via Resend.
+- Deployed a full-stack application using Vercel and Render.
+- Solved real-world production issues including CORS, routing, environment variables, and email delivery.
+
 ## 👩‍💻 Author
 
 **Sriya T**
