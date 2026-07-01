@@ -405,6 +405,31 @@ Repository code for Register FLow:
 
 <img width="726" height="500" alt="repRegBCode" src="https://github.com/user-attachments/assets/83cf9166-8e18-41e5-9aca-532f52c31118" />
 
+# Frontend Setup:
+
+We already have auth-frontend folder.
+cd auth-frontend
+
+# Create frontend app using REACT + VITE
+
+Then install:
+react-router-dom
+redux-toolkit
+react-redux
+axios
+
+<img width="322" height="471" alt="f1" src="https://github.com/user-attachments/assets/b3f0d5f5-3d76-461d-8c36-ef54fe5da105" />
+
+<img width="240" height="363" alt="f2" src="https://github.com/user-attachments/assets/92d01c16-2252-4b41-ae4f-480412f85b08" />
+
+<img width="238" height="206" alt="f3" src="https://github.com/user-attachments/assets/4ce24ad9-603e-47ca-86fc-a062e75f30b8" />
+
+<img width="310" height="377" alt="f4" src="https://github.com/user-attachments/assets/527e4a2c-943a-4489-95da-62cf4c533987" />
+
+
+
+
+
 
    
 
