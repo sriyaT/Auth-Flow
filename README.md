@@ -157,9 +157,6 @@ cd auth-frontend
 npm install
 npm run dev
 
-
-
-
 # Configure Environment Variables
 
 .env
@@ -177,11 +174,6 @@ RESEND_API_KEY=
 
 FRONTEND_URL=
 ```
-
----
-<img width="362" height="321" alt="ins1" src="https://github.com/user-attachments/assets/dbd42c34-0112-40fa-8e83-153503419157" />
-
-<img width="382" height="359" alt="backendfolderstruct" src="https://github.com/user-attachments/assets/105a4250-678b-42f0-b82b-ce79f1d67624" />
 
 ## 📚 Learn More
 
