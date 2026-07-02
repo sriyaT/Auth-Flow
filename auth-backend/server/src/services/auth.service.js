@@ -40,6 +40,7 @@ const login = async (email, password) => {
   const jwtRefreshToken = jwt.sign(payload, refresh_secret, {
     expiresIn: "2d",
   });
+
   await userRepository.saveRefreshToken(existingUser.id, jwtRefreshToken);
   return {
     id: existingUser.id,

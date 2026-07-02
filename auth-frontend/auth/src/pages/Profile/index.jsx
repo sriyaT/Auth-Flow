@@ -1,7 +1,16 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../redux/slices/authSlice";
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const auth = useSelector((state) => state?.auth?.user);
+  const logoutHandler = () => {
+    dispatch(logout());
+    localStorage.removeItem("auth");
+    navigate("/auth/login");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-100 flex items-center justify-center px-4 py-10">
@@ -52,7 +61,10 @@ const Profile = () => {
             Edit Profile
           </button> */}
 
-          <button className="flex-1 rounded-xl border border-red-300 py-3 font-semibold text-red-600 transition hover:bg-red-50">
+          <button
+            className="flex-1 rounded-xl border border-red-300 py-3 font-semibold text-red-600 transition hover:bg-red-50"
+            onClick={logoutHandler}
+          >
             Logout
           </button>
         </div>

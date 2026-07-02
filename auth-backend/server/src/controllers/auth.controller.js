@@ -1,5 +1,6 @@
 const authService = require("../services/auth.service");
 const emailService = require("../services/email.service");
+
 const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
